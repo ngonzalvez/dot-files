@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+
+# Git add alias autocomplete
+if ga &> /dev/null; then
+    _ga()
+    {
+        local WORD CHOICES REPLY STRLEN
+
+        # WORD is the user's input.
+        WORD="${COMP_WORDS[COMP_WORD-1]}"
+        wIdx=0
+        CHOICES=`git status --porcelain | sed s/^...//`
+        COMPREPLY=( )
+
+        for CHOICE in $CHOICES
+        do
+            # If $CHOICE contains $WORD.
+            if [[ "$CHOICE" == *"$WORD"* ]]
+            then
+                # Add the choice to the reply array.
+                COMPREPLY+=("$CHOICE")
+            fi
+        done
+
+        return 0
+    }
+    complete -o nospace -F _ga ga
+fi
+
+

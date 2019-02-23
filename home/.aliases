@@ -1,0 +1,166 @@
+#
+#                  █████  ██     ██  █████  ███████ ███████ ███████
+#                 ██   ██ ██     ██ ██   ██ ██      ██      ██
+#                 ███████ ██     ██ ███████ ███████ ███████ ███████
+#                 ██   ██ ██     ██ ██   ██      ██ ██           ██
+#                 ██   ██ ██████ ██ ██   ██ ███████ ███████ ███████
+#
+
+
+#################################################################
+# UTILS
+#################################################################
+function reload {
+    source $HOME/.vars
+    source $HOME/.aliases
+    source $HOME/.completions
+    source $HOME/.inputrc
+}
+
+# Connect to dad's home network.
+function caniso {
+    sudo su -c 'wpa_supplicant -i wlp3s0 -c <(cat /home/ngonzalvez/Documents/wifipass | wpa_passphrase "Caniso1") &'
+}
+function caniso5 {
+    sudo su -c 'wpa_supplicant -i wlp3s0 -c <(cat /home/ngonzalvez/Documents/wifipass | wpa_passphrase "caniso5") &'
+}
+
+#function gatto {
+#    curl -d "url=$1" -s https://gat.to | grep 'id="testo"' | cut -d'"' -f8 | xclip -selection clipboard
+#}
+
+alias weather="curl wttr.in/concepcion"
+
+#################################################################
+# FILES AND DIRECTORIES
+#################################################################
+alias cl="clear"
+alias ..="cd .."
+alias ls="ls --color"
+alias sl="ls"
+
+#################################################################
+# Screens
+#################################################################
+alias fhd="xrandr --output HDMI-1 --above eDP-1 --mode 1920x1080 --rate 60"
+alias uhd="xrandr --output HDMI-1 --above eDP-1 --mode 2560x1080 --rate 60"
+alias 4k="xrandr --output HDMI-1 --above eDP-1 --mode 3840x2160 --rate 60"
+alias hdmi-off="xrandr --output HDMI-1 --off"
+
+#################################################################
+# SERVICES
+#################################################################
+alias start="sudo systemctl start"
+alias stop="sudo systemctl stop"
+alias status="sudo systemctl status"
+alias restart="sudo systemctl restart"
+
+
+#################################################################
+# GIT
+#################################################################
+alias cgs="clear; git status -sb ."
+alias ck="git checkout"
+alias gg="git grep"
+alias gc="git commit"
+alias ga="git add"
+alias gs="cgs"
+alias gsa="git stash apply"
+alias gf="git fetch"
+alias merge="git merge"
+alias branch="clear; git branch -a"
+alias gsu="git submodule update --recursive --remote"
+
+function push {
+    if [ -z "$1" ]; then
+        BRANCH=`git rev-parse --abbrev-ref HEAD`
+    else
+        BRANCH="$1"
+    fi
+
+    echo "Pushing to $BRANCH"
+    git push origin $BRANCH
+}
+
+function pull {
+    git fetch origin
+
+    if [ -z "$1" ]; then
+        BRANCH=`git rev-parse --abbrev-ref HEAD`
+    else
+        BRANCH="$1"
+    fi
+
+    echo "Pulling from $BRANCH"
+    git pull origin $BRANCH --rebase
+}
+
+function rebase {
+    echo "Rebasing on $1"
+    git rebase origin $1
+}
+
+#Virtual Env
+function venv() {
+    [ -r "./.venv" ] && {
+        source .venv/bin/activate
+    }
+}
+
+
+
+# Personal
+function proj() {
+    local QUERY CHOICES
+
+    QUERY=$1
+    CHOICES=`find $PROJECTS -maxdepth 4 -type d ! -path "*/node_modules/*" ! -path "*/.git/*"`
+
+    for CHOICE in $CHOICES
+    do
+        # If $CHOICE contains $QUERY.
+        if [[ "$CHOICE" == *"$QUERY" ]]
+        then
+            cd $CHOICE;
+        fi
+    done
+
+    return 0
+}
+
+
+# System
+alias swapctrl="sudo loadkeys /usr/share/kbd/keymaps/personal.map"
+alias bright="echo $1 > /sys/class/backlight/intel_backlight/brightness"
+
+function power {
+    awk '{print $1*10^-6 " W"}' /sys/class/power_supply/BAT0/power_now
+}
+
+
+# Network
+alias torrents="transmission-remote-cli"
+
+# Webcam
+alias webcam="v4l2ucp"
+
+# Sector Vault
+SV_API="~/Projects/TakeLAN/sectorvault/sv-api"
+SV_UI="~/Projects/TakeLAN/sectorvault/sv-ui"
+alias sv-api="sudo php -f $SV_API/basic/web/index.php -S localhost:3000 -t $SV_API/basic/web/"
+alias sv-ui="npm start --prefix $SV_UI"
+alias byk-web="ssh root@$BYK_SERVER"
+alias byk-ui="cd $BYK_DIR/ui/src"
+alias byk-api="cd $BYK_DIR/api/src"
+
+#################################################################
+# TAKELAN
+#################################################################
+alias tlax="ssh ngonzalvez@lax01.takelan.com"
+alias tapi="ssh ngonzalvez@api.takelan.com"
+
+#################################################################
+# PERSONAL
+#################################################################
+alias gonz="ssh root@gonzalvez.com.uy"
+

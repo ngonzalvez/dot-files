@@ -1,0 +1,33 @@
+rofi.color-enabled: true
+
+! State:           'bg',     'fg',     'bgalt',  'hlbg',   'hlfg'
+rofi.color-normal: #101218,  #a1a4b0,  #101218,  #101218,  #9575cd
+rofi.color-urgent: #101218,  #a1a4b0,  #101218,  #101218,  #9575cd
+rofi.color-active: #101218,  #a1a4b0,  #101218,  #101218,  #9575cd
+
+!                  'background', 'border'
+rofi.color-window: #101218,      #101218
+
+rofi.lines: 3
+rofi.eh: 2
+rofi.line-margin: 16
+rofi.padding: 80
+rofi.opacity: 90
+rofi.bw: 0
+
+rofi.fullscreen: true
+rofi.font: Monaco 16
+
+! --- Terminal fonts ---
+! XTerm*faceName: Inconsolata:size=8:antialias=true
+XTerm*renderFont: true
+XTerm*scaleHeight: 1.2
+! Xft.autohint: 0
+! Xft.lcdfilter: lcddefault
+! Xft.hintstyle: hintslight
+! Xft.hinting: 1
+! Xft.antialias: 1
+Xft.rgba: rgb
+
+
+#include ".Xresources.d/themes/5"
