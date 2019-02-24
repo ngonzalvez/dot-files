@@ -1,0 +1,154 @@
+set $mod Mod4
+
+# Font
+font pango:Monaco 8
+
+# Key for drag windows (mouse+$mod)
+floating_modifier $mod
+
+# Start a terminal
+bindsym $mod+Return exec --no-startup-id st
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id ~/.scripts/drun.sh
+
+# Change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# Alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split in horizontal orientation
+bindsym $mod+i split h
+
+# Split in vertical orientation
+bindsym $mod+o split v
+
+# Enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Focus the parent container
+bindsym $mod+a focus parent
+
+# Switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace 3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace 10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace
+bindsym $mod+Shift+r restart
+
+# Colors alias
+set $CL_BG #282C34
+set $CL_FG #ABB2BF
+set $CL_CUR #528BFF
+set $CL_BLACK #000000
+set $CL_RED #E06C75
+set $CL_GREEN #98C379
+set $CL_ORANGE #D19A66
+set $CL_BLUE #61AEEE
+set $CL_MAGENTA #C678DD
+set $CL_CYAN #56B6C2
+set $CL_LIGHTGRAY #ABB2BF
+set $CL_DARKGRAY #5C6370
+set $CL_WHITE #FFFFFF
+
+# Decotations colors
+
+# class                 border      backgr.     text    indicator   child_border
+client.focused          $CL_CUR     $CL_CUR     $CL_BG   $CL_CUR     $CL_CUR
+client.focused_inactive $CL_MAGENTA $CL_MAGENTA $CL_BG   $CL_MAGENTA $CL_MAGENTA
+client.unfocused        $CL_BG      $CL_BG      $CL_CUR  $CL_BG      $CL_BG
+client.urgent           $CL_RED     $CL_RED     $CL_BG   $CL_RED     $CL_RED
+client.placeholder      $CL_BG      $CL_BG      $CL_WHITE $CL_BLACK  $CL_BG
+
+# Bar setup
+bar {
+    tray_output none
+    mode invisible
+}
+
+# fn keys binds
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+bindsym XF86TouchpadToggle exec ~/.scripts/touchpadtoggle.sh
+
+# Next layout
+bindsym $mod+space exec --no-startup-id xkblayout-state set +1
+
+# Make screenshot
+bindsym --release Print exec scrot ~/Screenshots/Screenshot_%d-%m-%y-%T.png
+# Make screenshot current window (Alt+Print)
+bindsym --release Mod1+Sys_Req exec scrot -u ~/Screenshots/Screenshot_%d-%m-%y-%T.png
+# Make screenshot for selected window
+bindsym --release Shift+Print exec scrot -s ~/Screenshots/Screenshot_%d-%m-%y-%T.png
+
+# Remove border while only one window opens
+smart_borders on
+
+new_window pixel 1
+new_float pixel 1
+
+# Setup keyboard layout
+exec setxkbmap -layout "us,ru,ua"
+# Setup wallpaper
+exec feh --bg-scale "Pictures/3.jpg"
+# Double buffering
+exec compton
+# Run status bar
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+
+# vim: ft=i3

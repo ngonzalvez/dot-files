@@ -1,0 +1,194 @@
+ q# Constants
+  set $mod Mod1
+
+  set $base00 #101218
+  set $base01 #1f222d
+  set $base02 #252936
+  set $base03 #7780a1
+  set $base04 #C0C5CE
+  set $base05 #d1d4e0
+  set $base06 #C9CCDB
+  set $base07 #ffffff
+  set $base08 #ee829f
+  set $base09 #f99170
+  set $base0A #ffefcc
+  set $base0B #a5ffe1
+  set $base0C #97e0ff
+  set $base0D #97bbf7
+  set $base0E #c0b7f9
+  set $base0F #fcc09e
+
+  set $workspace1 "1: "
+  set $workspace2 "2: "
+  set $workspace3 "3: "
+  set $workspace4 "4: "
+  set $workspace5 "5: "
+  set $workspace6 "6: "
+  set $workspace7 "7: "
+  set $workspace8 "8: "
+  set $workspace9 "9: "
+  set $workspace10 "10: "
+
+  #set $built_in_display "eDP1"
+  #set $vga_display "DP1"
+  #set $hdmi_display "HDMI1"
+
+# General Configuration
+  font pango:Monaco 8
+  floating_modifier $mod
+  hide_edge_borders both
+  new_window none
+  smart_borders on
+  gaps inner 0 
+  gaps outer 0 
+
+# Window-Related Bindings
+  bindsym $mod+Shift+q kill
+  bindsym $mod+h focus left
+  bindsym $mod+j focus down
+  bindsym $mod+k focus up
+  bindsym $mod+l focus right
+  bindsym $mod+Shift+h move left
+  bindsym $mod+Shift+j move down
+  bindsym $mod+Shift+k move up
+  bindsym $mod+Shift+l move right
+  bindsym $mod+Shift+c move position center 
+  bindsym $mod+Shift+space floating toggle
+  bindsym $mod+f fullscreen toggle
+  bindsym $mod+v layout toggle split
+  #bindsym $mod+\ split h
+  #bindsym $mod+- split v
+  bindsym $mod+space focus mode_toggle
+  bindsym $mod+r mode "resize"
+
+  mode "resize" {
+    bindsym h resize shrink width 5px
+    bindsym j resize grow height 5px
+    bindsym k resize shrink height 5px
+    bindsym l resize grow width 5px
+    bindsym Escape mode "default"
+  }
+
+# Restart-Related Bindings
+  bindsym $mod+Shift+t reload
+  bindsym $mod+Shift+r restart
+
+# Program-Related Bindings
+  bindsym $mod+Shift+f exec firefox 
+  bindsym $mod+Shift+c exec chromium 
+  bindsym $mod+Shift+m exec nylas 
+  bindsym $mod+Return exec xterm -fa "PT Mono" -fs 8 -sh 1.4
+  bindsym $mod+d exec rofi -show run -color-enabled 
+  
+# bindsym --release Print exec imgur-screenshot
+  bindsym --release $mod+Shift+z exec gnome-screenshot
+  bindsym --release $mod+Shift+x exec gnome-screenshot -a
+  bindsym --release $mod+Shift+a exec gnome-screenshot -i
+  bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# Volume & Media Bindings
+  bindsym XF86AudioLowerVolume exec --no-startup-id amixer -D pulse sset Master 5%-
+  bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -D pulse sset Master 5%+
+  bindsym XF86AudioMute exec --no-startup-id amixer -D pulse sset Master 0% 
+  bindsym XF86AudioPlay exec playerctl play-pause
+  bindsym XF86AudioPause exec playerctl pause
+  bindsym XF86AudioNext exec playerctl next
+  bindsym XF86AudioPrev exec playerctl previous
+
+# Display-Related Bindings
+  bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+  bindsym XF86MonBrightnessUp exec xbacklight -inc 5
+
+# Workspace-Related Bindings
+  bindsym $mod+1 workspace $workspace1
+  bindsym $mod+2 workspace $workspace2
+  bindsym $mod+3 workspace $workspace3
+  bindsym $mod+4 workspace $workspace4
+  bindsym $mod+5 workspace $workspace5
+  bindsym $mod+6 workspace $workspace6
+  bindsym $mod+7 workspace $workspace7
+  bindsym $mod+8 workspace $workspace8
+  bindsym $mod+9 workspace $workspace9
+  bindsym $mod+0 workspace $workspace10
+
+  bindsym $mod+Control+1 move container to workspace $workspace1
+  bindsym $mod+Control+2 move container to workspace $workspace2
+  bindsym $mod+Control+3 move container to workspace $workspace3
+  bindsym $mod+Control+4 move container to workspace $workspace4
+  bindsym $mod+Control+5 move container to workspace $workspace5
+  bindsym $mod+Control+6 move container to workspace $workspace6
+  bindsym $mod+Control+7 move container to workspace $workspace7
+  bindsym $mod+Control+8 move container to workspace $workspace8
+  bindsym $mod+Control+9 move container to workspace $workspace9
+  bindsym $mod+Control+0 move container to workspace $workspace10
+
+# Workspace Monitors
+  workspace $workspace1 output $vga_display
+  workspace $workspace2 output $vga_display
+  workspace $workspace3 output $vga_display
+  workspace $workspace4 output $vga_display
+  workspace $workspace5 output $vga_display
+  workspace $workspace6 output $built_in_display
+  workspace $workspace7 output $built_in_display
+  workspace $workspace8 output $built_in_display
+  workspace $workspace9 output $built_in_display
+  workspace $workspace10 output $built_in_display
+
+# Program Workspaces
+  # assign [class="Firefox"] $workspace1
+  # assign [class="Spotify"] $workspace10
+
+# Floating
+  for_window [class="Lxappearance"] floating enable
+  for_window [class="Seahorse"] floating enable
+  for_window [class="Pavucontrol"] floating enable
+  for_window [class="Nitrogen"] floating enable
+  for_window [class="InputOutput"] floating enable
+  for_window [instance="xterm" title="ranger"] floating enable
+
+# Colors alias
+set $CL_BG #282C34
+set $CL_FG #ABB2BF
+set $CL_CUR #528BFF
+set $CL_BLACK #000000
+set $CL_RED #E06C75
+set $CL_GREEN #98C379
+set $CL_ORANGE #D19A66
+set $CL_BLUE #61AEEE
+set $CL_MAGENTA #C678DD
+set $CL_CYAN #56B6C2
+set $CL_LIGHTGRAY #ABB2BF
+set $CL_DARKGRAY #5C6370
+set $CL_WHITE #FFFFFF
+
+# Decotations colors
+
+# class                 border      backgr.     text    indicator   child_border
+client.focused          $CL_CUR     $CL_CUR     $CL_BG   $CL_CUR     $CL_CUR
+client.focused_inactive $CL_MAGENTA $CL_MAGENTA $CL_BG   $CL_MAGENTA $CL_MAGENTA
+client.unfocused        $CL_BG      $CL_BG      $CL_CUR  $CL_BG      $CL_BG
+client.urgent           $CL_RED     $CL_RED     $CL_BG   $CL_RED     $CL_RED
+client.placeholder      $CL_BG      $CL_BG      $CL_WHITE $CL_BLACK  $CL_BG
+
+
+# Bar
+  bar {
+    status_command polybar mybar
+    position top 
+    mode invisible
+    # strip_workspace_numbers yes
+    #height 25
+  }
+
+# Compton
+exec_always compton -f
+
+# Multiple screens
+exec xrandr --output DP1 --auto --above eDP1
+exec xrandr --output HDMI1 --auto --above eDP1
+
+# Multiple keyboards.
+exec setxkbmap -layout "us,es"
+
+# Wallpaper
+exec --no-startup-id nitrogen --restore
